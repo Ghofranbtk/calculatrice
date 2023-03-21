@@ -1,0 +1,501 @@
+package ghofranbt;
+import java.util.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import java.awt.Color;
+import javax.swing.*;
+import java.awt.event.*;
+ 
+
+public class Calcul  implements ActionListener
+{
+
+	// ---------------------Déclaration de tous les composants de la calculatrice-------------------
+	String ch="";
+	int i=-1;
+	//double[] tab;
+	char[] op;
+	String opo="";
+	
+	JFrame f;
+	JTextField t,t1;
+	JButton cc,b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bdiv,bmul,bsub,badd,bdec,beq,bdel,bclr;
+	// Déclaration du données initialement a 0 
+	static double a=0,b=0,result=0;
+	static String operator="";
+    // Création du constructeur
+	public Calcul() 
+	{
+		
+		//-------------------- Nommage du calculatrice--------------------------------
+		f=new JFrame("Calculatrice");
+		t = new JTextField();
+
+		//-------------------commande pour annuler la tapulation sur clavier-------------------
+		t.setEditable(false);
+		
+		
+		// Crée les boutons en utilisant le constructeur de la classe JButton qui prend en paramètre le libellé du bouton
+
+		b1=new JButton("1");
+		b2=new JButton("2");
+		b3=new JButton("3");
+		b4=new JButton("4");
+		b5=new JButton("5");
+		b6=new JButton("6");
+		b7=new JButton("7");
+		b8=new JButton("8");
+		b9=new JButton("9");
+		b0=new JButton("0");
+		bdiv=new JButton("/");
+		bmul=new JButton("*");
+		bsub=new JButton("-");
+		badd=new JButton("+");
+		bdec=new JButton(".");
+		beq=new JButton("=");
+		bdel=new JButton("effacer");
+		bclr=new JButton("supprimer");
+		// --------------------------------faire posistionné les boutons-----------------------
+	
+		t.setBounds(20,40,280,30);
+		b1.setBounds(40,100,50,40);
+		b2.setBounds(110,100,50,40);
+		b3.setBounds(180,100,50,40);
+		badd.setBounds(250,100,50,40);
+		
+		b4.setBounds(40,170,50,40);
+		b5.setBounds(110,170,50,40);
+		b6.setBounds(180,170,50,40);
+		bsub.setBounds(250,170,50,40);
+		
+		b7.setBounds(40,240,50,40);
+		b8.setBounds(110,240,50,40);
+		b9.setBounds(180,240,50,40);
+		bmul.setBounds(250,240,50,40);
+		
+		bdec.setBounds(40,310,50,40);
+		b0.setBounds(110,310,50,40);
+		beq.setBounds(180,310,50,40);
+		bdiv.setBounds(250,310,50,40);
+		
+		bdel.setBounds(60,380,100,40);
+		bclr.setBounds(180,380,100,40);
+		//------------------ changer les couleurs des boutons----------------------------------------
+
+		b1.setBackground(Color.LIGHT_GRAY);
+		b2.setBackground(Color.LIGHT_GRAY);
+		b3.setBackground(Color.LIGHT_GRAY);
+		b4.setBackground(Color.LIGHT_GRAY);
+		b5.setBackground(Color.LIGHT_GRAY);
+		b6.setBackground(Color.LIGHT_GRAY);
+		b7.setBackground(Color.LIGHT_GRAY);
+		b8.setBackground(Color.LIGHT_GRAY);
+		b9.setBackground(Color.LIGHT_GRAY);
+		b0.setBackground(Color.LIGHT_GRAY);
+		bdec.setBackground(Color.LIGHT_GRAY);
+		
+		badd.setBackground(Color.gray);
+		bmul.setBackground(Color.gray);
+		bdiv.setBackground(Color.gray);
+		beq.setBackground(Color.gray);
+		bsub.setBackground(Color.gray);
+		
+		bdel.setBackground(Color.WHITE);
+		bclr.setBackground(Color.WHITE);
+
+		//------------------ changer la couleur de texte dans les boutons----------------------------------------
+
+		
+		bdel.setForeground(Color.DARK_GRAY);
+		bclr.setForeground(Color.DARK_GRAY);
+		
+		badd.setForeground(Color.white);
+		bmul.setForeground(Color.white);
+		bsub.setForeground(Color.white);
+		bdiv.setForeground(Color.white);
+		beq.setForeground(Color.white);
+
+		//------------------ l'ajout des boutons----------------------------------------
+
+		
+		f.add(t);
+		f.add(b7);
+		f.add(b8);
+		f.add(b9);
+		f.add(bdiv);
+		f.add(b4);
+		f.add(b5);
+		f.add(b6);
+		f.add(bmul);
+		f.add(b1);
+		f.add(b2);
+		f.add(b3);
+		f.add(bsub);
+		f.add(bdec);
+		f.add(b0);
+		f.add(beq);
+		f.add(badd);
+		f.add(bdel);
+		f.add(bclr);
+		
+		f.setLayout(null);
+		
+		//------------------- visibilite ----------------------------------------
+		f.setVisible(true);
+		//----------------------------- taille du calculatrice ----------------------------------
+		f.setSize(400,500);
+		
+		//--------------------operation exit------------------------------------
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//-------------------------------- Permet de ne pas redimentionner la fenetre --------------------------
+		f.setResizable(false);
+		
+		//-------------------------Ajouter l'action des boutons -------------------------
+		
+		
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		b3.addActionListener(this);
+		b4.addActionListener(this);
+		b5.addActionListener(this);
+		b6.addActionListener(this);
+		b7.addActionListener(this);
+		b8.addActionListener(this);
+		b9.addActionListener(this);
+		b0.addActionListener(this);
+		badd.addActionListener(this);
+		bdiv.addActionListener(this);
+		bmul.addActionListener(this);
+		bsub.addActionListener(this);
+		bdec.addActionListener(this);
+		beq.addActionListener(this);
+		bdel.addActionListener(this);
+		bclr.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		
+		//----------------------- si on choisit la bouton 1 -----------------
+		
+		if(e.getSource()==b1) {
+			t.setText(t.getText().concat("1"));
+		}
+		
+		//----------------------- si on choisit la bouton 2 -----------------
+		
+		if(e.getSource()==b2) {
+			t.setText(t.getText().concat("2"));
+		}
+		
+		//----------------------- si on choisit la bouton 3 -----------------
+		
+		if(e.getSource()==b3) {
+			t.setText(t.getText().concat("3"));
+		}
+		
+		//----------------------- si on choisit la bouton 4 -----------------
+		
+		if(e.getSource()==b4) {
+			t.setText(t.getText().concat("4"));
+		}
+		
+		//----------------------- si on choisit la bouton 5 -----------------
+		
+		if(e.getSource()==b5) {
+			t.setText(t.getText().concat("5"));
+		}
+		
+		//----------------------- si on choisit la bouton 6 -----------------
+		
+		if(e.getSource()==b6) {
+			t.setText(t.getText().concat("6"));
+		}
+		
+		//----------------------- si on choisit la bouton 7 -----------------
+		
+		if(e.getSource()==b7) {
+			t.setText(t.getText().concat("7"));
+		}
+		
+		//----------------------- si on choisit la bouton 8 -----------------
+		
+		if(e.getSource()==b8) {
+			t.setText(t.getText().concat("8"));
+		}
+		
+		//----------------------- si on choisit la bouton 9 -----------------
+		
+		if(e.getSource()==b9) {
+			t.setText(t.getText().concat("9"));
+		}
+		
+		//----------------------- si on choisit la bouton 0 -----------------
+		
+		if(e.getSource()==b0) {	
+			t.setText(t.getText().concat("0"));
+		}
+		
+		//----------------------- si on choisit la bouton . -----------------
+		
+		if(e.getSource()==bdec) {
+			
+			String ver=t.getText();
+			
+			int d=ver.length()-1;
+			
+			
+			if(d==-1) {
+				t.setText(t.getText().concat("."));	
+			}
+			
+			else if((ver.charAt(d)!='+') && (ver.charAt(d)!='-') && (ver.charAt(d)!='*') && (ver.charAt(d)!='/') && (ver.charAt(d)!='.') ) {
+					t.setText(t.getText().concat("."));}
+		}
+		
+		
+		//----------------------- si on choisit la bouton + -----------------
+		
+		if(e.getSource()==badd)
+		{
+			//operator="+";
+			String ver=t.getText();
+			int d=ver.length()-1;
+			
+			if(d==-1) {
+				t.setText(t.getText().concat("+"));	
+			}
+			
+			else if((ver.charAt(d)!='+') && (ver.charAt(d)!='-') && (ver.charAt(d)!='*') && (ver.charAt(d)!='/') && (ver.charAt(d)!='.') ) {
+			t.setText(t.getText().concat("+"));}
+		}
+		
+		//----------------------- si on choisit la bouton - -----------------
+		
+		if(e.getSource()==bsub)
+		{
+			//operator="-";
+			String ver=t.getText();
+			int d=ver.length()-1;
+			if(d==-1) {
+				t.setText(t.getText().concat("-"));	
+			}
+			else if(  (ver.charAt(d)!='+') && (ver.charAt(d)!='-') && (ver.charAt(d)!='*') && (ver.charAt(d)!='/') && (ver.charAt(d)!='.')  ) {
+			t.setText(t.getText().concat("-"));}
+		} 
+		
+		//----------------------- si on choisit la bouton * -----------------
+		
+		if(e.getSource()==bmul)
+		{
+		
+			//operator="*";
+			String ver=t.getText();
+			int d=ver.length()-1;
+			if(d==-1) {
+				t.setText(t.getText().concat("*"));	
+			}
+			else if((ver.charAt(d)!='+') && (ver.charAt(d)!='-') && (ver.charAt(d)!='*') && (ver.charAt(d)!='/') && (ver.charAt(d)!='.') ) {
+			t.setText(t.getText().concat("*"));}
+		} 
+		//----------------------- si on choisit la bouton / -----------------
+		if(e.getSource()==bdiv)
+		{
+			
+			
+			//operator="/";
+			String ver=t.getText();
+			int d=ver.length()-1;
+			
+			if(d==-1) {
+				t.setText(t.getText().concat("/"));	
+			}
+			
+			else if((ver.charAt(d)!='+') && (ver.charAt(d)!='-') && (ver.charAt(d)!='*') && (ver.charAt(d)!='/') && (ver.charAt(d)!='.') ) {
+			t.setText(t.getText().concat("/"));}
+		} 
+		//-----------------------------------------------Si on choisit la bouton = -----------------------
+		if(e.getSource()==beq)
+		{
+			
+			t.setText(t.getText());
+			//-------------on initialise une chaine ch a l'expression sur la zone t ------------------------
+			
+			ch=t.getText();
+		
+			
+			//----------on verifie d'abord la validité de l'expression on utilisant la classe monException ----------------------
+			//------------ verification si l'expression ne termine pas par un operateur -------------------
+			
+			
+			int n = ch.length()-1;
+			
+			if((ch.charAt(n)=='+') || (ch.charAt(n)=='-') || (ch.charAt(n)=='*') || (ch.charAt(n)=='/') || (ch.charAt(n)=='.') ) {
+				t.setText("ne termine pas par un operateur !");
+			}
+					
+			
+			//------------ verification si l'expression ne commance pas par un operateur -------------------
+		
+			 if((ch.charAt(0)=='+') ||  (ch.charAt(0)=='*') || (ch.charAt(0)=='/') || (ch.charAt(0)=='.') ) {
+				 t.setText("ne commance pas par un operateur !");
+			}
+			
+			
+			
+			
+			
+			
+			//-----------------------------------avec le StringTokenizer on remplit le tableau par les valeurs et les operateurs utilisées -----
+	
+			StringTokenizer st = new StringTokenizer(t.getText(),"+-/*",true);
+			
+			ArrayList<String> tab = new ArrayList<>();
+			
+			int i=0;
+			while(st.hasMoreTokens()) {
+				tab.add(i,st.nextToken());
+				i=i+1;
+			}
+		
+			//--------on fait le calcule pour les diff operateurs utilisées  ----------
+			//le concept consiste de faire les operations par un oprdre de priorité pour l'operateur * et / 
+			// par la suite pour le + et -
+			//et pour chaque operateur utilisé en fait le calcule et on le supprime 
+			// donc on repete le traitement jusqu a le tableau soit vide................... 
+			
+		
+			
+			
+			
+while( tab.size() != 1 ) {
+		//-------- dans le cas ou l'xpression commance par signe - --------------
+	
+	 if(tab.indexOf("-")==0){
+			double p =Double.parseDouble(tab.get(tab.indexOf("-")+1));
+			p=p*(-1);
+			ch=String.valueOf(p);
+			tab.remove(tab.indexOf("-"));
+			tab.remove(tab.indexOf("-")+1);
+			tab.add(0, ch);
+			
+		}
+
+
+	//--------- c'est le cas de priorité pour l'operateur * et /----------------
+	
+	  if((tab.indexOf("*")!=-1) || (tab.indexOf("/")!=-1) ){
+					
+					int indexA = tab.indexOf("*");
+					int indexB = tab.indexOf("/");
+					
+					if(((tab.indexOf("*")!=-1) &&(indexA<indexB))||((tab.indexOf("*")!=-1) &&(indexB==-1))){
+						double a = Double.parseDouble(tab.get(tab.indexOf("*")-1));
+						double b = Double.parseDouble(tab.get(tab.indexOf("*")+1));
+						double c = a*b;
+						String d = String.valueOf(c);
+						tab.add(tab.indexOf("*")-1, d);
+						tab.remove(tab.indexOf("*")+1);
+						tab.remove(tab.indexOf("*")-1);
+						tab.remove(tab.indexOf("*"));
+						
+					}
+					else if(((tab.indexOf("/")!=-1) && (indexB<indexA) )||((tab.indexOf("/")!=-1) &&(indexA==-1))){
+						double a = Double.parseDouble(tab.get(tab.indexOf("/")-1));
+						double b = Double.parseDouble(tab.get(tab.indexOf("/")+1));
+						double c = a/b;
+						String d = String.valueOf(c);
+						tab.add(tab.indexOf("/")-1, d);
+						tab.remove(tab.indexOf("/")+1);
+						tab.remove(tab.indexOf("/")-1);
+						tab.remove(tab.indexOf("/"));
+						
+						
+						
+					}
+				}
+	  
+	  //--------- operation + et - -----------------
+	  
+				else if ((tab.indexOf("+")!=-1) || (tab.indexOf("-")!=-1)) {
+					
+					int indexA = tab.indexOf("+");
+					int indexB = tab.indexOf("-");
+					
+					if(((tab.indexOf("+")!=-1) &&(indexA<indexB))||((tab.indexOf("+")!=-1) &&(indexB==-1))) {
+						double a = Double.parseDouble(tab.get(tab.indexOf("+")-1));
+						double b = Double.parseDouble(tab.get(tab.indexOf("+")+1));
+						double c = a+b;
+						String d = String.valueOf(c);
+						tab.add(tab.indexOf("+")-1, d);
+						tab.remove(tab.indexOf("+")+1);
+						tab.remove(tab.indexOf("+")-1);
+						tab.remove(tab.indexOf("+"));
+						
+					}
+					else if(((tab.indexOf("-")!=-1) && (indexB<indexA) ) && (tab.indexOf("-")!=0) ||((tab.indexOf("-")!=-1) &&(indexA==-1) && (tab.indexOf("-")!=0) )) {
+						double a = Double.parseDouble(tab.get(tab.indexOf("-")-1));
+						double b = Double.parseDouble(tab.get(tab.indexOf("-")+1));
+						double c = a-b;
+						String d = String.valueOf(c);
+				
+						
+						
+						tab.add(tab.indexOf("-")-1, d);
+						tab.remove(tab.indexOf("-")+1);
+						tab.remove(tab.indexOf("-")-1);
+						tab.remove(tab.indexOf("-"));
+						
+					}
+				}
+			
+				
+			} 
+
+
+			if(tab.get(0).charAt(0)=='I') {
+				try {
+					int m = 5/0 ;
+				}
+				catch(Exception e2) {
+					t.setText("Devision par zero !");
+				}
+			}
+			else {
+			t.setText(tab.get(0));
+			}
+			
+		}
+	
+	
+	
+		//------- si on chaoisit la bouton Supprimer -------------------------- 
+	if(e.getSource()==bclr)
+		t.setText("");		
+
+	//-----------si on choisit la bouton Effacer -------------------------------
+	
+	if(e.getSource()==bdel)
+	{
+		String s=t.getText();
+		t.setText("");
+		for(int i=0;i<s.length()-1;i++)
+		t.setText(t.getText()+s.charAt(i));
+	}	
+			
+			
+		}
+			
+	public static void main(String...s) 
+	{
+		//appel a calculatrice
+		new Calcul();
+		
+	}
+	
+	
+	}
+	
+	
